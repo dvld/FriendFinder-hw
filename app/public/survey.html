@@ -182,7 +182,7 @@
 
         <div class="modal-body">
           <h2 id="match-name"></h2>
-          <img src="" alt="" id="match-img">
+          <img style="height: 250px; width: 375px" src="" alt="" id="match-img">
         </div>
 
         <div class="modal-footer">
@@ -197,6 +197,7 @@
 
   <script type="text/javascript">
 
+    // chosen css
     var config = {
       '.chosen-select': {},
       '.chosen-select-deselect': {
@@ -217,9 +218,11 @@
       $(selector).chosen(config[selector]);
     }
 
+    // capture form inputs
     $('#submit').on('click', function (event) {
       event.preventDefault();
 
+      // validate form
       function validateForm() {
         var isValid = true;
         $('.form-control').each(function () {
@@ -236,7 +239,9 @@
         return isValid;
       }
 
+      // if all requirements met
       if (validateForm()) {
+        // create object of user data
         var userData = {
           name: $('#name').val(),
           photo: $('photo').val(),
@@ -254,10 +259,14 @@
           ]
         };
 
+        // post data to friends api
         $.post('/api/friends', userData, function (data) {
+
+          // grab post and display results
           $('#match-name').text(data.name);
           $('#match-img').attr('src', data.photo);
 
+          // show modal
           $('#results-modal').modal('toggle');
         });
 
